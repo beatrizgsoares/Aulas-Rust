@@ -1,0 +1,1 @@
+## Exercícios para as aulas de rust
