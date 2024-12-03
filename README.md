@@ -1,6 +1,6 @@
 # Exercícios para as aulas de rust
 ## Primeiros conceitos
-- Calculadora;
+- [Calculadora](/tree/main/calculadora);
 - Jogo de advinhar (jogo_numeros);
 - Sequência de Fibonacci;
 - Prime checker (primo);
