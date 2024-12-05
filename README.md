@@ -23,4 +23,7 @@
 ## Enums e matching
 - [Formas geométricas](https://github.com/beatrizgsoares/aulas-rust/tree/main/formas);
 - [Livraria 3.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/livraria3);
+
+## Nulls e erros
+- [Livraria 4.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/livraria4);
   
