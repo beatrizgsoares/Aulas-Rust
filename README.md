@@ -26,4 +26,10 @@
 
 ## Nulls e erros
 - [Livraria 4.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/livraria4);
+- [Mercearia 3.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/mercearia3)
+
+## Traits e Genéricos
+- [Sort genérico](https://github.com/beatrizgsoares/aulas-rust/tree/main/sort_generico)
+- [Stack genérica](https://github.com/beatrizgsoares/aulas-rust/tree/main/stack_generica)
+- [Mercearia 4.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/mercearia4)
   
