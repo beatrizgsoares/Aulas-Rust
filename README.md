@@ -33,3 +33,5 @@
 - [Stack genérica](https://github.com/beatrizgsoares/aulas-rust/tree/main/stack_generica)
 - [Mercearia 4.0](https://github.com/beatrizgsoares/aulas-rust/tree/main/mercearia4)
   
+## Projeto final
+- [Gestor de inventário](https://github.com/beatrizgsoares/aulas-rust/tree/main/projeto)
