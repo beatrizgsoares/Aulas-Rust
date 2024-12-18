@@ -1,3 +1,4 @@
+use std::fmt;
 #[derive(Debug, Clone)]
 struct Produto{
     identificador: String,
@@ -27,7 +28,7 @@ struct Mercearia{
 }
 
 fn main() {
-    let mut presunto = Produto{
+    let presunto = Produto{
         identificador: String::from("PRE"),
         nome: String::from("Presunto"),
         validade: String::from("01-01-2025"),
@@ -42,9 +43,10 @@ fn main() {
         quantidade: 20
     };
 
+    println!("---Mudar preço e nome de Produto---");
     queijo.mudar_preço(4.5);
     queijo.mudar_nome("Queijo da Serra");
-    println!("{:?}", queijo);
+    println!("{}", queijo);
 
     /*let mut zona_teste = Zona{id: 0, lista_produtos: vec![]};
     println!("{:?}", zona_teste);
@@ -54,32 +56,50 @@ fn main() {
     println!("{}", zona_teste.tem_produto("QUE"));
     zona_teste.inserir_produto(queijo);*/
 
+    println!("---Criar Mercearia e inserir produtos---");
     let mut mercearia = Mercearia::new(2, 3, 3);
-    mercearia.obter_zona(0, 1, 2).lista_produtos = vec![queijo.clone()];
+    //mercearia.obter_zona(0, 1, 2).lista_produtos = vec![queijo.clone()];
     mercearia.inserir_produto(presunto, 0, 1, 2);
-    println!("{:?}", mercearia.obter_zona(0, 1, 2));
-    //println!("{:?}", mercearia.obter_prateleira(0, 1));
-    //println!("{:?}", mercearia.obter_fileira(0));
-    println!("QUE existe nesta fila? {}", mercearia.obter_fileira(0).tem_produto("QUE").0);
-    println!("QUE existe nesta prateleira desta fila? {}", mercearia.obter_prateleira(0, 1).tem_produto("QUE").0);
-    println!("QUE existe nesta zona desta prateleira desta fila? {}", mercearia.obter_zona(0, 1, 2).tem_produto("QUE").0);
+    mercearia.inserir_produto(queijo.clone(), 0, 1, 2);
+    println!("{}", mercearia.obter_zona(0, 1, 2));
+    //println!("{}", mercearia.obter_prateleira(0, 1));
+    //println!("{}", mercearia.obter_fileira(0));
+    println!("{}", mercearia);
+    println!("---Tentativa de inserir produto repetido---");
     mercearia.inserir_produto(queijo, 1, 0, 1);
+
+    println!("---Verificar se determinado Produto existe numa dada região da Mercearia---");
+    println!("QUE existe na fila 0? {}", mercearia.obter_fileira(0).tem_produto("QUE").0);
+    println!("QUE existe na prateleira 1 da fila 0? {}", mercearia.obter_prateleira(0, 1).tem_produto("QUE").0);
+    println!("QUE existe na zona 2 da prateleira 1 da fila 0? {}", mercearia.obter_zona(0, 1, 2).tem_produto("QUE").0);
+    println!("QUE existe na fila 1? {}", mercearia.obter_fileira(1).tem_produto("QUE").0);
+
+    println!("---Remover Produto---");
     mercearia.remover_produto("QUE");
     println!("QUE existe na mercearia? {}", mercearia.tem_produto("QUE").0);
-    println!("{:?}", mercearia.obter_zona(0, 1, 2));
+    println!("{}", mercearia.obter_zona(0, 1, 2));
+
+    println!("---Mudar nome de Produto da Mercearia---");
     mercearia.mudar_nome("PRE", "Presunto Ibérico");
-    println!("{:?}", mercearia.obter_zona(0, 1, 2));
+    println!("{}", mercearia.obter_zona(0, 1, 2));
+    println!("---Mudar preço de Produto da Mercearia---");
     mercearia.mudar_preço("PRE", 5.99);
-    println!("{:?}", mercearia.obter_zona(0, 1, 2));
+    println!("{}", mercearia.obter_zona(0, 1, 2));
+
+    println!("---Mover Produto dentro da Mercearia---");
     mercearia.mover_produto("PRE", 1, 0, 1);
-    println!("{:?}", mercearia.obter_zona(0, 1, 2));
-    println!("{:?}", mercearia.obter_zona(1, 0, 1));
+    println!("{}", mercearia.obter_zona(0, 1, 2));
+    println!("{}", mercearia.obter_zona(1, 0, 1));
+
+    println!("---Adicionar quantidade de Produto da Mercearia---");
     mercearia.adicionar_quantidade("PRE", 5);
-    println!("{:?}", mercearia.obter_zona(1, 0, 1));
+    println!("{}", mercearia.obter_zona(1, 0, 1));
+    println!("---Remover quantidade de Produto da Mercearia---");
     mercearia.remover_quantidade("PRE", 24);
-    println!("{:?}", mercearia.obter_zona(1, 0, 1));
+    println!("{}", mercearia.obter_zona(1, 0, 1));
+    println!("---Tentativa de remover maior quantidade de Produto do que aquela que existe---");
     mercearia.remover_quantidade("PRE", 2);
-    println!("{:?}", mercearia.obter_zona(1, 0, 1));
+    println!("{}", mercearia.obter_zona(1, 0, 1));
 }
 
 impl Produto{
@@ -176,7 +196,7 @@ impl Mercearia {
         &mut self.lista_fileira[id_fileira as usize]
     }
     fn inserir_produto(&mut self, prod: Produto, id_fileira: u32, id_prateleira: u32, id_zona: u32){
-        let (existe, id_fil_existe, id_prat_existe, id_zona_existe, index_prod) = self.tem_produto(&prod.identificador);
+        let (existe, id_fil_existe, id_prat_existe, id_zona_existe, _index_prod) = self.tem_produto(&prod.identificador);
         if existe {
             println!("Produto {} já existe na Fila {}, Prateleira {}, Zona {}. Operação cancelada", prod.identificador, id_fil_existe, id_prat_existe, id_zona_existe);
             return;
@@ -236,7 +256,7 @@ impl Mercearia {
     fn remover_quantidade(&mut self, id_prod: &str, remov: u32){
         let (existe, id_fileira, id_prateleira, id_zona, index_prod) = self.tem_produto(id_prod);
         if existe{
-            let mut q = &mut self.obter_zona(id_fileira, id_prateleira, id_zona).lista_produtos[index_prod].quantidade;
+            let q = &mut self.obter_zona(id_fileira, id_prateleira, id_zona).lista_produtos[index_prod].quantidade;
             if remov <= *q{
                 *q-=remov;
             }else{
@@ -246,5 +266,42 @@ impl Mercearia {
         }else{
             println!("Produto {} não existe na mercearia, por isso não pode ser removida quantidade.", id_prod);
         }
+    }
+}
+impl fmt::Display for Produto{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "[{} -> {}, val: {}, pr: {}€, qt: {}]", self.identificador, self.nome, self.validade, self.preço, self.quantidade)
+    }
+}
+impl fmt::Display for Zona{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Zona {}: {{", self.id)?;
+        for produto in &self.lista_produtos{
+            write!(f, " {} ", produto)?;
+        }write!(f,"}}")
+    }
+}
+impl fmt::Display for Prateleira{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Prateleira {}:", self.id)?;
+        for zona in &self.lista_zonas{
+            write!(f, "\n  {}", zona)?;
+        }Ok(())
+    }
+}
+impl fmt::Display for Fileira{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Fileira {}:", self.id)?;
+        for prateleira in &self.lista_prateleiras{
+            write!(f, "\n {}", prateleira)?;
+        }Ok(())
+    }
+}
+impl fmt::Display for Mercearia{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "Mercearia:")?;
+        for fileira in &self.lista_fileira{
+            write!(f, "\n{}", fileira)?;
+        }Ok(())
     }
 }
