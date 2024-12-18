@@ -6,6 +6,7 @@ struct Livro{
 }
 fn main() {
     let mut livraria:Vec<Livro> = vec![];
+
     let livro1 = Livro{
         titulo:String::from("Os Maias"),
         autor:String::from("Eça de Queirós"),
@@ -17,40 +18,42 @@ fn main() {
         requisitado:false,
     };
 
-    adicionar_livro(&mut livraria, &livro1);
-    adicionar_livro(&mut livraria, &livro2);
+    adicionar_livro(&mut livraria, livro1);
+    adicionar_livro(&mut livraria, livro2);
     println!("{:?}", livraria);
-    //println!("{:?}", livro1);
-    remover_livro(&mut livraria, &livro1);
+
+    remover_livro(&mut livraria, "Os Maias");
     println!("{:?}", livraria);
-    requisitar_livro(&mut livraria, &livro2);
+
+    requisitar_livro(&mut livraria, "Memorial do Convento");
     println!("{:?}", livraria);
-    devolver_livro(&mut livraria, &livro2);
+
+    devolver_livro(&mut livraria, "Memorial do Convento");
     println!("{:?}", livraria);
 
 }
-fn adicionar_livro(livraria:&mut Vec<Livro>, livro:&Livro) {
-    livraria.push(livro.clone());
+fn adicionar_livro(livraria:&mut Vec<Livro>, livro:Livro) {
+    livraria.push(livro);
 }
-fn remover_livro(livraria:&mut Vec<Livro>, livro:&Livro) {
+fn remover_livro(livraria:&mut Vec<Livro>, titulo: &str) {
     for i in 0..livraria.len() {
-        if livraria[i].titulo.to_string()==livro.titulo.to_string() {
+        if livraria[i].titulo==titulo.to_string() {
             livraria.remove(i);
             return;
         }
     }
 }
-fn requisitar_livro(livraria:&mut Vec<Livro>, livro:&Livro) {
+fn requisitar_livro(livraria:&mut Vec<Livro>, titulo: &str) {
     for i in 0..livraria.len() {
-        if livraria[i].titulo.to_string()==livro.titulo.to_string() {
+        if livraria[i].titulo==titulo.to_string() {
             livraria[i].requisitado = true;
             return;
         }
     }
 }
-fn devolver_livro(livraria:&mut Vec<Livro>, livro:&Livro) {
+fn devolver_livro(livraria:&mut Vec<Livro>, titulo: &str) {
     for i in 0..livraria.len() {
-        if livraria[i].titulo.to_string()==livro.titulo.to_string() {
+        if livraria[i].titulo==titulo.to_string() {
             livraria[i].requisitado = false;
             return;
         }
