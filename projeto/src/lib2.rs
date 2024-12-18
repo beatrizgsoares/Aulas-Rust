@@ -13,7 +13,7 @@ pub enum Qualidade{
     },
     Normal
 }
-pub trait Item{
+pub trait Item: std::fmt::Debug{
     fn identificador(&self) -> &u32;
     fn nome(&self) -> &String;
     fn quantidade(&self) -> &u32;
@@ -351,11 +351,11 @@ impl RoundRobin{
         }
     }
 }
-impl fmt::Debug for dyn Item{
+/*impl fmt::Debug for dyn Item{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "[id: {}, nome: {}, quantidade: {}, qualidade:{:?}]", self.identificador(), self.nome(), self.quantidade(), self.qualidade())
     }
-}
+}*/
 impl fmt::Display for Zona{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Zona {}: {{ {:?}, timestamp: {} }}", self.id, self.item, self.timestamp.format("%Y-%m-%d %H:%M:%S").to_string())
